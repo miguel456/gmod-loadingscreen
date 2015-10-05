@@ -1,4 +1,5 @@
 <?php
+require('config.php');
 
 error_reporting(0);
 @set_time_limit(3);
@@ -9,9 +10,9 @@ $map     = '';
 $avatar  = 'img/nouser.png';
 
 $authors = array(
-    1 => 'FIRST SONG NAME',
-    2 => 'SECOND SONG NAME',
-    3 => 'THIRD SONG NAME'
+    1 => '$song1',
+    2 => '$song2',
+    3 => '$song3'
 );
 
 $pictures = array(1,2,3);
@@ -21,7 +22,7 @@ if (isset($_GET['mapname']))
     $map = '<br>You will play the map: '.$_GET['mapname'];
 
 if (isset($_GET['steamid'])) {
-    $data = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamids='.$_GET['steamid'];
+    $data = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.$apikey.'&steamids='.$_GET['steamid'];
     $f = file_get_contents($data);
     $arr = json_decode($f, true);
     if (isset($arr['response']['players'][0]['personaname']))
@@ -58,20 +59,20 @@ if (isset($_GET['steamid'])) {
                     echo '<img src="img/'.$pic.'.jpg" alt="Picture '.$pic.'" class="imgtop img-rounded">';
                 }?>
             </div>
-            <h1 id="title" class="bigEntrance" style="font-size: 50px;">Cheesy Hans Gaming</h1>
+            <h1 id="title" class="bigEntrance" style="font-size: 50px;"><?php echo $title ?></h1>
             <p class="lead">
-                Welcome to our TTT-Server. Have fun!<br>
+                <?php echo $slogan ?><br>
                 <small>
                     <ul style="line-height: 1.6;">
-                        <li>Be friendly.</li>
-                        <li>No random killing - low karma autoban enabled.</li>
-                        <li>No Ghosting!</li>
-                        <li>Only English or German.</li>
-                        <li>Admins are kicking/baning if something is wrong.</li>
+                        <li><?php echo $rule1 ?></li>
+                        <li><?php echo $rule2 ?></li>
+                        <li><?php echo $rule3 ?></li>
+                        <li><?php echo $rule4 ?></li>
+                        <li><?php echo $rule5 ?></li>
                     </ul>
-                    All used Workshop items can be found here:
+                    <?php echo $cslogan ?>
                     <br>
-                    <code>www.steamcommunity.com/id/<b>xunocore</b></code><br>→ TTT-Servercontent DL (Link)
+                    <code><?php echo $curl ?></code>
                 </small>
             </p>
 

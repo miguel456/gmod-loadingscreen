@@ -1,4 +1,10 @@
 <?php
+require('config.php');
+
+//Error URL's
+$error_url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$error_url_test = $error_url . "?steamid=76561198043788577&mapname=test_map";
+$error_url_server = $error_url . "?steamid=%s&mapname=%m";
 
 error_reporting(0);
 @set_time_limit(3);
@@ -9,19 +15,31 @@ $map     = '';
 $avatar  = 'img/nouser.png';
 
 $authors = array(
-    1 => 'FIRST SONG NAME',
-    2 => 'SECOND SONG NAME',
-    3 => 'THIRD SONG NAME'
+    1 => '$song1',
+    2 => '$song2',
+    3 => '$song3'
 );
 
 $pictures = array(1,2,3);
 shuffle($pictures);
 
-if (isset($_GET['mapname']))
+if (isset($_GET['mapname'])){
     $map = '<br>You will play the map: '.$_GET['mapname'];
+}
+else {
+    die("<img src='img/ohno.jpg' style='margin-top: 20px height='256' width='256';' /><br />Oh-No! you don't seem to be using the correct parameters for this loading screen to function correctly.<br />
+    Please make sure you have the value of <code>sv_loadingurl</code> correctly set with all required url parameters e.g. <code>www.yourdomain.com/loading/index.php?steamid=%s&mapname=%m</code><br /><br />
+    You can test with the link below to make sure everything is working correctly<br />
+    <a href='$error_url_test'>$error_url_test</a><br /><br />
+    
+    When setting your loading url please make sure you set the paremeters correctly as seen in the link below<br />
+    <a href='$error_url_server'>$error_url_server</a>
+    
+    ");
+}
 
 if (isset($_GET['steamid'])) {
-    $data = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamids='.$_GET['steamid'];
+    $data = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.$apikey.'&steamids='.$_GET['steamid'];
     $f = file_get_contents($data);
     $arr = json_decode($f, true);
     if (isset($arr['response']['players'][0]['personaname']))
@@ -29,6 +47,17 @@ if (isset($_GET['steamid'])) {
     if (isset($arr['response']['players'][0]['avatar']))
         $avatar = $arr['response']['players'][0]['avatar'];
     
+}
+else {
+    die("<img src='img/ohno.jpg' style='margin-top: 20px height='256' width='256';' /><br />Oh-No! you don't seem to be using the correct parameters for this loading screen to function correctly.<br />
+    Please make sure you have the value of <code>sv_loadingurl</code> correctly set with all required url parameters e.g. <code>www.yourdomain.com/loading/index.php?steamid=%s&mapname=%m</code><br /><br />
+    You can test with the link below to make sure everything is working correctly<br />
+    <a href='$error_url_test'>$error_url_test</a><br /><br />
+    
+    When setting your loading url please make sure you set the paremeters correctly as seen in the link below<br />
+    <a href='$error_url_server'>$error_url_server</a>
+    
+    ");
 }
 
 ?>
@@ -58,20 +87,20 @@ if (isset($_GET['steamid'])) {
                     echo '<img src="img/'.$pic.'.jpg" alt="Picture '.$pic.'" class="imgtop img-rounded">';
                 }?>
             </div>
-            <h1 id="title" class="bigEntrance" style="font-size: 50px;">Cheesy Hans Gaming</h1>
+            <h1 id="title" class="bigEntrance" style="font-size: 50px;"><?php echo $title ?></h1>
             <p class="lead">
-                Welcome to our TTT-Server. Have fun!<br>
+                <?php echo $slogan ?><br>
                 <small>
                     <ul style="line-height: 1.6;">
-                        <li>Be friendly.</li>
-                        <li>No random killing - low karma autoban enabled.</li>
-                        <li>No Ghosting!</li>
-                        <li>Only English or German.</li>
-                        <li>Admins are kicking/baning if something is wrong.</li>
+                        <li><?php echo $rule1 ?></li>
+                        <li><?php echo $rule2 ?></li>
+                        <li><?php echo $rule3 ?></li>
+                        <li><?php echo $rule4 ?></li>
+                        <li><?php echo $rule5 ?></li>
                     </ul>
-                    All used Workshop items can be found here:
+                    <?php echo $cslogan ?>
                     <br>
-                    <code>www.steamcommunity.com/id/<b>xunocore</b></code><br>→ TTT-Servercontent DL (Link)
+                    <code><?php echo $curl ?></code>
                 </small>
             </p>
 

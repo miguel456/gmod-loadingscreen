@@ -1,6 +1,11 @@
 <?php
 require('config.php');
 
+//Error URL's
+$error_url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$error_url_test = $error_url . "?steamid=76561198043788577&mapname=test_map";
+$error_url_server = $error_url . "?steamid=%s&mapname=%m";
+
 error_reporting(0);
 @set_time_limit(3);
 
@@ -18,8 +23,20 @@ $authors = array(
 $pictures = array(1,2,3);
 shuffle($pictures);
 
-if (isset($_GET['mapname']))
+if (isset($_GET['mapname'])){
     $map = '<br>You will play the map: '.$_GET['mapname'];
+}
+else {
+    die("<img src='img/ohno.jpg' style='margin-top: 20px height='256' width='256';' /><br />Oh-No! you don't seem to be using the correct parameters for this loading screen to function correctly.<br />
+    Please make sure you have the value of <code>sv_loadingurl</code> correctly set with all required url parameters e.g. <code>www.yourdomain.com/loading/index.php?steamid=%s&mapname=%m</code><br /><br />
+    You can test with the link below to make sure everything is working correctly<br />
+    <a href='$error_url_test'>$error_url_test</a><br /><br />
+    
+    When setting your loading url please make sure you set the paremeters correctly as seen in the link below<br />
+    <a href='$error_url_server'>$error_url_server</a>
+    
+    ");
+}
 
 if (isset($_GET['steamid'])) {
     $data = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key='.$apikey.'&steamids='.$_GET['steamid'];
@@ -30,6 +47,17 @@ if (isset($_GET['steamid'])) {
     if (isset($arr['response']['players'][0]['avatar']))
         $avatar = $arr['response']['players'][0]['avatar'];
     
+}
+else {
+    die("<img src='img/ohno.jpg' style='margin-top: 20px height='256' width='256';' /><br />Oh-No! you don't seem to be using the correct parameters for this loading screen to function correctly.<br />
+    Please make sure you have the value of <code>sv_loadingurl</code> correctly set with all required url parameters e.g. <code>www.yourdomain.com/loading/index.php?steamid=%s&mapname=%m</code><br /><br />
+    You can test with the link below to make sure everything is working correctly<br />
+    <a href='$error_url_test'>$error_url_test</a><br /><br />
+    
+    When setting your loading url please make sure you set the paremeters correctly as seen in the link below<br />
+    <a href='$error_url_server'>$error_url_server</a>
+    
+    ");
 }
 
 ?>

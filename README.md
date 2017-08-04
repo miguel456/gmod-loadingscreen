@@ -19,7 +19,14 @@ add a loading screen for your garrys mod server!
 - Show current music title
 
 **Additional**
-- rules.php for showing rules after server join for the `motd` (ULX has to be installed)
+- rules.php for showing rules after server join for the `motd` (ULX has to be installed) 
+
+## Planned features
+- OO Porting
+- Config files for everything
+- Checking if music directory is empty
+- Allowing for more music
+- Instead of repeating a song, which can be annoying, make it so that they don't loop
 
 ## Requirements
 

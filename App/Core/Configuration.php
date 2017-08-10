@@ -3,51 +3,51 @@
 class Configuration
 {
 
-  private $iniLocation = __DIR__ . "../Config.in";
+  private $iniLocation = __DIR__ . "/../Config.ini";
 
 
-  private $ini;
+   private $ini;
+
+
+   private $dataMain;
+
+
+   private $dataDatabase;
+
+
+
+   private $dataPreferences;
+
+
+
+   private $dataEmail;
 
 
   public function __construct()
   {
     $this->ini = parse_ini_file($this->iniLocation, true);
+
+    $this->dataMain["ApiKey"] = $this->ini['Main']['SteamApiKey'];
+    $this->dataMain["ApplicationName"] = $this->ini['Main']['ApplicationName'];
+
+    $this->dataDatabase['Hostname'] = $this->ini['Database']['Hostname'];
+    $this->dataDatabase['Username'] = $this->ini['Database']['Username'];
+    $this->dataDatabase['Password'] = $this->ini['Database']['Password'];
+    $this->dataDatabase['DatabaseName'] = $this->ini['Database']['DatabaseName'];
+
+    $this->dataPreferences['WebmasterEmail'] = $this->ini['Preferences']['WebmasterEmail'];
+    $this->dataPreferences['PicDir'] = $this->ini['Preferences']['PicDir'];
+    $this->dataPreferences['LogDir'] = $this->ini['Preferences']['LogDir'];
+    $this->dataPreferences['MusicDir'] = $this->ini['Preferences']['MusicDir'];
+    $this->dataPreferences['SendJoinNotifs'] = $this->ini['Preferences']['SendJoinNotifs'];
+
+    $this->dataEmail['Hostname'] = $this->ini['Email']['ServerHostname'];
+    $this->dataEmail['SMTPUsername'] = $this->ini['Email']['SMTPUsername'];
+    $this->dataEmail['SMTPPassword'] = $this->ini['Email']['SMTPPassword'];
+
   }
 
-  private $dataMain =
-                  [
-                    "ApiKey" => $this->ini['Main']['SteamApiKey'],
-                    "ApplicationName" => $this->ini['Main']['ApplicationName']
-                  ]
-  private $dataDatabase =
-                  [
-                    "Hostname" => $this->ini['Database']['Hostname'],
-                    "Username" => $this->ini['Database']['Username'],
-                    "Password" => $this->ini['Database']['Password'],
-                    "DatabaseName" => $this->ini['Database']['DatabaseName']
-
-                  ]
-  private $dataPreferences =
-                  [
-
-                    "WebmasterEmail" => $this->ini['Preferences']['WebmasterEmail'],
-                    "PicDir" => $this->ini['Preferences']['PicDir'],
-                    "MusicDir" => $this->ini['Preferences']['MusicDir'],
-                    "LogDir" => $this->ini['Preferences']['LogDir'],
-                    "SendJoinNotifs" => $this->ini['Preferences']['SendJoinNotifs']
-
-
-                  ]
-
-   private $dataEmail =
-                  [
-                    "Hostname" => $this->ini['Email']['ServerHostname'],
-                    "SMTPUsername" => $this->ini['Email']['SMTPUsername'],
-                    "SMTPPassword" => $this->ini['Email']['SMTPPassword']
-                  ]
-
-
-    public function getIniValue($ValueName, $Section)
+  public function getIniValue($ValueName, $Section)
     {
 
       switch($Section)

@@ -13,7 +13,7 @@ class LogEngine
 
   public function __construct($LogDebug = false)
   {
-    ($logDebug == true) : $this->logDebug = true : $this->logDebug = false;
+    ($LogDebug == true) ? $this->logDebug = true : $this->logDebug = false;
   }
 
   public function setInstanceSeverity($Severity = "LOW")
@@ -26,7 +26,7 @@ class LogEngine
                             "INFO"
                           ];
 
-    if (!in_array($ValidSeverityLevels, $Severity))
+    if (!in_array($Severity, $ValidSeverityLevels))
     {
       throw new InvalidArgumentException("Invalid severity level!");
     }
@@ -44,8 +44,8 @@ class LogEngine
 
   public function writeLog()
   {
-    $Config = new Configuration()
-    $Sev->logSeverity;
+    $Config = new Configuration();
+    $Sev = $this->logSeverity;
     $Dat = date('l jS \of F Y h:i:s A');
 
     $h = fopen($Config->getIniValue("Prefs", "LogDir") . "/messages.log", "a+");

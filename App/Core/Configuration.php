@@ -25,9 +25,21 @@ class Configuration
 
   public function __construct()
   {
+    $l = new LogEngine();
+    // TODO: Fix memory limit crash
     $this->ini = parse_ini_file($this->iniLocation, true);
 
     $this->dataMain["ApiKey"] = $this->ini['Main']['SteamApiKey'];
+
+    if(empty($this->dataMain['ApiKey']))
+    {
+      $l->setInstanceSeverity("WARNING");
+      $l->setMessage("Your API key setting is empty! Please fill it with your key, otherwise, name resolution WILL NOT work.");
+      $l->writeLog();
+
+    }
+
+
     $this->dataMain["ApplicationName"] = $this->ini['Main']['ApplicationName'];
 
     $this->dataDatabase['Hostname'] = $this->ini['Database']['Hostname'];
@@ -71,7 +83,7 @@ class Configuration
               $l->setInstanceSeverity("ERROR");
               $l->setMessage("Unexpected data for category \"email\". Received the following: " . $ValueName);
 
-              $l->writeMessage();
+              $l->writeLog();
               throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
 
           }
@@ -101,7 +113,7 @@ class Configuration
               $l->setInstanceSeverity("ERROR");
               $l->setMessage("Unexpected data for category \"Preferences\". Received the following: " . $ValueName);
 
-              $l->writeMessage();
+              $l->writeLog();
               throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
 
           }
@@ -126,7 +138,7 @@ class Configuration
               $l->setInstanceSeverity("ERROR");
               $l->setMessage("Unexpected data for category \"Database\". Received the following: " . $ValueName);
 
-              $l->writeMessage();
+              $l->writeLog();
               throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
 
 
@@ -146,7 +158,7 @@ class Configuration
             $l->setInstanceSeverity("ERROR");
             $l->setMessage("Unexpected data for category \"Main\". Received the following: " . $ValueName);
 
-            $l->writeMessage();
+            $l->writeLog();
             throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
 
         }
@@ -156,7 +168,7 @@ class Configuration
         $l->setInstanceSeverity("ERROR");
         $l->setMessage("Unexpected data for global selector. Received the following: " . $ValueName);
 
-        $l->writeMessage();
+        $l->writeLog();
         throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
 
 

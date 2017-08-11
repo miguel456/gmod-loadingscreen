@@ -23,6 +23,8 @@ class LogEngine
                             'LOW',
                             "MEDIUM",
                             "HIGH",
+                            "ERROR",
+                            "WARNING",
                             "CRITICAL",
                             "INFO"
                           ];

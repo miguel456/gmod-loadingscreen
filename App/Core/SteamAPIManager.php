@@ -14,9 +14,11 @@ class SteamAPI
   {
     $c = new Configuration();
 
-    $this->AccessKey = $c->getIniValue("ApiKey", "Main");
-    $this->SteamID = $SteamID;
-    $this->SteamUserName = $this->getUserData("Username");
+    // garry's steam ID if none is supplied (ex. first page load), so the name showing up will be garry's until you enter an ID.
+    (is_null($SteamID)) ? $nID = "76561197960279927" : $SteamID;
+
+    $this->AccessKey = $c->getIniValue("ApiKey", "main");
+    $this->SteamID = (isset($nID)) ? $nID : $SteamID;
 
   }
 
@@ -44,7 +46,9 @@ class SteamAPI
     $id = $this->SteamID;
 
     $ApiCall = $this->GetBaseURL() . "&steamids=$id";
+
     $ch->isGET();
+    $ch->setOpt(CURLOPT_SSL_VERIFYPEER, false); // Avoid invalid certificate error
 
     switch($What)
     {
@@ -96,13 +100,13 @@ class SteamAPI
 
   public function GetUserSteamName()
   {
-    l = new LogEngine();
+    $l = new LogEngine();
     $l->setInstanceSeverity("INFO");
 
     $l->setMessage("Retrieving Steam Name for SteamID " . $this->SteamID);
     $l->writeLog();
 
-    return $this->SteamUsername;
+    return $this->getUserData("Username");
   }
 
 }

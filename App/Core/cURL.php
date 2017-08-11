@@ -137,7 +137,7 @@
                 break;
          }
 
-         if ($ret == false)
+         if ($ret == false || $ret == null)
          {    // NOTE: Again, changing to Exception().
              // throw new curlException("A " . $this->method . " request failed: " . curl_errno($this->chandle));
              throw new Exception("A " . $this->method . " request failed: " . curl_errno($this->chandle));

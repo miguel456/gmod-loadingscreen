@@ -124,7 +124,7 @@
                 if(empty($this->postData))
                 {   // NOTE: Changing to Exception().
                     // throw new curlException("No data supplied for POST request!");
-                    throw new curlException("No data supplied for POST request!");
+                    throw new Exception("No data supplied for POST request!");
                 }
 
                 $this->setOpt(CURLOPT_POST, 1);

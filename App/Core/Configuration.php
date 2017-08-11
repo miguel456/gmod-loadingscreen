@@ -50,6 +50,8 @@ class Configuration
   public function getIniValue($ValueName, $Section)
     {
       // TODO: Throw meaningful exception instead of a silent error message
+      $l = new LogEngine();
+
       switch($Section)
       {
         case "email":
@@ -66,8 +68,12 @@ class Configuration
               $data = $this->dataEmail['SMTPPassword'];
               break;
             default:
-              $data = "ERR_SECEMAIL_1";
-              break;
+              $l->setInstanceSeverity("ERROR");
+              $l->setMessage("Unexpected data for category \"email\". Received the following: " . $ValueName);
+
+              $l->writeMessage();
+              throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
+
           }
 
           break;
@@ -91,8 +97,13 @@ class Configuration
               $data = $this->dataPreferences['WebmasterEmail'];
               break;
             default:
-              $data = "ERR_SECPREFS_1";
-              break;
+
+              $l->setInstanceSeverity("ERROR");
+              $l->setMessage("Unexpected data for category \"Preferences\". Received the following: " . $ValueName);
+
+              $l->writeMessage();
+              throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
+
           }
           break;
         case "database":
@@ -112,7 +123,12 @@ class Configuration
               $data = $this->dataDatabase['DatabaseName'];
               break;
             default:
-              $data = "ERR_SECDATABASE_1";
+              $l->setInstanceSeverity("ERROR");
+              $l->setMessage("Unexpected data for category \"Database\". Received the following: " . $ValueName);
+
+              $l->writeMessage();
+              throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
+
 
           }
           break;
@@ -127,11 +143,24 @@ class Configuration
             $data = $this->dataMain["ApplicationName"];
             break;
           default:
-            $data = "ERR_SECMAIN_1";
+            $l->setInstanceSeverity("ERROR");
+            $l->setMessage("Unexpected data for category \"Main\". Received the following: " . $ValueName);
+
+            $l->writeMessage();
+            throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
+
         }
         break;
       default:
-        $data = "ERR_GLOBALSEC_1";
+
+        $l->setInstanceSeverity("ERROR");
+        $l->setMessage("Unexpected data for global selector. Received the following: " . $ValueName);
+
+        $l->writeMessage();
+        throw new UnexpectedValueException("An internal error has ocurred. Please check your logs for info.");
+
+
+
         break;
 
       }

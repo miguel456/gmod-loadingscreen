@@ -39,6 +39,7 @@ class SteamAPI
   private function getUserData($What)
   {
     $ch = new cURL();
+    $l = new LogEngine();
 
     $id = $this->SteamID;
 
@@ -68,7 +69,11 @@ class SteamAPI
         // TODO: Implement the rest of the ISteamUser interface
         break;
       default:
-        throw new InvalidArgumentException("Don't know what to do. Supply a valid action and try again.");
+        $l->setInstanceSeverity("CRITICAL");
+        $l->setMessage("Action selector error on method " . __METHOD__ . ". An invalid action was specified.");
+
+        $l->writeLog();
+        throw new InvalidArgumentException("An internal error has ocurred. Please check your log file.");
 
     }
 
@@ -78,11 +83,25 @@ class SteamAPI
 
   public function GetUserPicture()
   {
+
+    $l = new LogEngine();
+    $l->setInstanceSeverity("INFO");
+
+    $l->setMessage("Retrieving Steam Profile picture for SteamID " . $this->SteamID);
+    $l->writeLog();
+
     return $this->getUserData("Picture");
+
   }
 
   public function GetUserSteamName()
   {
+    l = new LogEngine();
+    $l->setInstanceSeverity("INFO");
+
+    $l->setMessage("Retrieving Steam Name for SteamID " . $this->SteamID);
+    $l->writeLog();
+
     return $this->SteamUsername;
   }
 

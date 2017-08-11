@@ -49,7 +49,7 @@ class Configuration
 
   public function getIniValue($ValueName, $Section)
     {
-
+      // TODO: Throw meaningful exception instead of a silent error message
       switch($Section)
       {
         case "email":
@@ -64,6 +64,9 @@ class Configuration
               break;
             case "SMTPPass":
               $data = $this->dataEmail['SMTPPassword'];
+              break;
+            default:
+              $data = "ERR_SECEMAIL_1";
               break;
           }
 
@@ -87,6 +90,9 @@ class Configuration
             case "WebmasterEmail":
               $data = $this->dataPreferences['WebmasterEmail'];
               break;
+            default:
+              $data = "ERR_SECPREFS_1";
+              break;
           }
           break;
         case "database":
@@ -105,6 +111,8 @@ class Configuration
             case "DatabaseName":
               $data = $this->dataDatabase['DatabaseName'];
               break;
+            default:
+              $data = "ERR_SECDATABASE_1";
 
           }
           break;
@@ -118,10 +126,16 @@ class Configuration
           case "ApplicationName":
             $data = $this->dataMain["ApplicationName"];
             break;
+          default:
+            $data = "ERR_SECMAIN_1";
         }
+        break;
+      default:
+        $data = "ERR_GLOBALSEC_1";
         break;
 
       }
+      return (isset($data)) ? $data : "ERR_UNKNOWN_RETURN";
 
     }
     // Convenience method.

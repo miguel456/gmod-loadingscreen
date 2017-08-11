@@ -2,6 +2,7 @@
 
 class LogEngine
 {
+
   private $logMessage;
 
 
@@ -48,7 +49,7 @@ class LogEngine
     $Sev = $this->logSeverity;
     $Dat = date('l jS \of F Y h:i:s A');
 
-    $h = fopen($Config->getIniValue("Prefs", "LogDir") . "/messages.log", "a+");
+    $h = fopen(__DIR__ . "\.." . $Config->getIniValue("LogDir", "Prefs") . "/messages.log", "a+");
     fwrite($h, "[{$Sev}] ({$Dat}) -> " . $this->logMessage . PHP_EOL);
     fclose($h);
   }

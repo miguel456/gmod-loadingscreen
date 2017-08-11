@@ -9,6 +9,11 @@ add a loading screen for your garrys mod server!
 
 ![Screenshot](http://i.imgur.com/kdmSZ18.png)
 
+## NOTE
+A beautiful JS version of this loading screen is currently under development by it's original author, [@CodeBrauer](https://github.com/CodeBrauer).
+Check it out [here!](https://github.com/CodeBrauer/gmod-loadingscreen/tree/v2.0) -
+I'll keep improving this one with better PHP tho, and probably add PHP instead of JS to his new version.
+
 ## Features
 
 - Basic template built with bootstrap (responsive)

@@ -41,6 +41,7 @@ class Configuration
 
 
     $this->dataMain["ApplicationName"] = $this->ini['Main']['ApplicationName'];
+    $this->dataMain["SteamIDConvKey"] = $this->ini['Main']['SteamID_EUKey'];
 
     $this->dataDatabase['Hostname'] = $this->ini['Database']['Hostname'];
     $this->dataDatabase['Username'] = $this->ini['Database']['Username'];
@@ -153,6 +154,9 @@ class Configuration
             break;
           case "ApplicationName":
             $data = $this->dataMain["ApplicationName"];
+            break;
+          case "APIEU_Key":
+            $data = $this->dataMain['SteamIDConvKey'];
             break;
           default:
             $l->setInstanceSeverity("ERROR");

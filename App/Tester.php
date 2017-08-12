@@ -24,7 +24,9 @@ $steam = new SteamAPI((isset($_POST['sid']) ? htmlspecialchars($_POST['sid']) : 
 
         <p>SteamID</p>
         <input type="text" name="sid" id="insteam">
-        <p id="presult">Profile Name: <?php echo $steam->GetUserSteamName(); ?></p>
+        <input type="submit" name="submit" value="Magic">
+
+        <p id="presult">Result: <?php echo $steam->GetUserSteamName(); ?></p>
 
 
       </form>

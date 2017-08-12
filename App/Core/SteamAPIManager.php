@@ -5,9 +5,13 @@ class SteamAPI
 
   private $AccessKey;
 
+  private $AccessKeyConverter;
+
   private $SteamUsername;
 
   private $SteamID;
+
+  private $SteamID64;
 
 
   public function __construct($SteamID)
@@ -15,9 +19,11 @@ class SteamAPI
     $c = new Configuration();
 
     // garry's steam ID if none is supplied (ex. first page load), so the name showing up will be garry's until you enter an ID.
-    (is_null($SteamID)) ? $nID = "76561197960279927" : $SteamID;
+    (is_null($SteamID)) ? $nID = "STEAM_0:1:7099" : $SteamID;
 
     $this->AccessKey = $c->getIniValue("ApiKey", "main");
+    $this->AccessKeyConverter = $c->getIniValue("APIEU_Key", "main");
+
     $this->SteamID = (isset($nID)) ? $nID : $SteamID;
 
   }
@@ -38,12 +44,25 @@ class SteamAPI
 
   }
 
+  private function GetConverterBaseURL()
+  {
+    $key = $this->AccessKeyConverter;
+
+    $url = "https://steamid.eu/api/convert.php?api=$key";
+
+    return $url;
+
+  }
+
   private function getUserData($What)
   {
     $ch = new cURL();
     $l = new LogEngine();
 
-    $id = $this->SteamID;
+    // Instead of using this directly, we're using the return value from the converter method.
+    // $id = $this->SteamID;
+
+    $id = $this->_32To64CommunityValid();
 
     $ApiCall = $this->GetBaseURL() . "&steamids=$id";
 
@@ -81,6 +100,32 @@ class SteamAPI
     }
 
     return $ret;
+
+  }
+
+  // Converts a 32 bit SteamID given by the server to a usable, 64 bit community ID
+  private function _32To64CommunityValid()
+  {
+    // Notes to self: The ID32 is what the server originally provides, so it should be SteamID (class field)
+    // This method should return a valid ID64.
+    $ID32 = $this->SteamID;
+
+    $ch = new cURL();
+
+    $ch->isGET();
+    $ch->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+
+    $ApiCall = $this->GetConverterBaseURL() . "&input=$ID32";
+
+    // XML to JSON conversion
+
+    $ch->setURL($ApiCall);
+
+    $result = simplexml_load_string($ch->execute());
+    $json = json_encode($result);
+    $jsonfinal = json_decode($json, true);
+
+    return $jsonfinal['converted']['steamid64'];
 
   }
 

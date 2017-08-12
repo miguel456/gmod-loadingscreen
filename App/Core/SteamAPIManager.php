@@ -60,8 +60,7 @@ class SteamAPI
         $ch->setURL($ApiCall);
 
         $data = json_decode($ch->execute(), true);
-
-        $ret = $data['response']['players'][0]['personname'];
+        $ret = $data['response']['players'][0]['personaname'];
         break;
 
       case "Picture":

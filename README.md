@@ -27,8 +27,8 @@ I'll keep improving this one with better PHP tho, and probably add PHP instead o
 - rules.php for showing rules after server join for the `motd` (ULX has to be installed) 
 
 ## Planned features
-- OO Porting
-- Config files for everything
+- ~~OO Porting~~ - ✓
+- ~~Config files for everything~~ - ✓
 - Checking if music directory is empty
 - Allowing for more music
 - Instead of repeating a song, which can be annoying, make it so that they don't loop

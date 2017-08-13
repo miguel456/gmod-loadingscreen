@@ -37,6 +37,9 @@ class Configuration
       $l->setMessage("Your API key setting is empty! Please fill it with your key, otherwise, name resolution WILL NOT work.");
       $l->writeLog();
 
+      // This exception should not be removed as this will cause a memory limit (or execution limit) to be hit
+      throw new RuntimeException("ERROR: API Key not found. Please check your logfile.");
+
     }
 
 
@@ -53,6 +56,7 @@ class Configuration
     $this->dataPreferences['LogDir'] = $this->ini['Preferences']['LogDir'];
     $this->dataPreferences['MusicDir'] = $this->ini['Preferences']['MusicDir'];
     $this->dataPreferences['SendJoinNotifs'] = $this->ini['Preferences']['SendJoinNotifs'];
+    $this->dataPreferences['RulesFile'] = $this->ini['Preferences']['RulesFile'];
 
     $this->dataEmail['Hostname'] = $this->ini['Email']['ServerHostname'];
     $this->dataEmail['SMTPUsername'] = $this->ini['Email']['SMTPUsername'];
@@ -108,6 +112,9 @@ class Configuration
               break;
             case "WebmasterEmail":
               $data = $this->dataPreferences['WebmasterEmail'];
+              break;
+            case "RulesFile":
+              $data = $this->dataPreferences['RulesFile'];
               break;
             default:
 

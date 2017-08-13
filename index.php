@@ -2,6 +2,9 @@
 // This is more of a failsafe than a needed piece of code.
 error_reporting(0);
 @set_time_limit(3);
+
+require 'App/Bootstrapper.php';
+
 // Init vars (I find variable initialization good for better code, but it's not explicitly necessary here)
 $r       = mt_rand(1,3);
 $plname  = 'Player';
@@ -25,7 +28,7 @@ shuffle($pictures);
 // Assign normal values from API and server inputs
 $map = (isset($_GET['mapname'])) ? "You are connecting to: ", htmlspecialchars(strip_slashes($_GET['map'])) : "You are connecting to: gm_construct (unspecified default)";
 
-$sid = (isset($_GET['steamid'])) ? htmlspecialchars(strip_slashes($_GET['steamid'])) : "garry's steam id, already set to default"; 
+$sid = (isset($_GET['steamid'])) ? htmlspecialchars(strip_slashes($_GET['steamid'])) : "garry's steam id, already set to default";
 
 $steam = new SteamAPI($sid);
 $plname = $steam->GetUserSteamName();
@@ -47,7 +50,7 @@ $avatar = $steam->GetUserPicture();
 
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
-<body> 
+<body>
     <audio autoplay loop>
         <source src="music/<?php echo $r?>.ogg" type="audio/ogg">
     </audio>

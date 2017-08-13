@@ -14,9 +14,11 @@ class ComposerStaticInita6c4e5bb37c5703d73379a10845923c1
         'PHPMailerOAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauth.php',
         'PHPMailerOAuthGoogle' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauthgoogle.php',
         'POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.pop3.php',
+        'RuleManager' => __DIR__ . '/../..' . '/App/Core/RuleManager.php',
         'SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.smtp.php',
         'SteamAPI' => __DIR__ . '/../..' . '/App/Core/SteamAPIManager.php',
         'cURL' => __DIR__ . '/../..' . '/App/Core/cURL.php',
+        'curlException' => __DIR__ . '/../..' . '/App/Core/Ex/curlException.php',
         'ntlm_sasl_client_class' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/ntlm_sasl_client.php',
         'phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
     );

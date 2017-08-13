@@ -1,0 +1,13 @@
+# Rules file. All rules should be declared inside this file.
+# WARNING: DO NOT USE TABS! USE 7 SPACES INSTEAD.
+
+
+rule_nocheat:
+        description: "An example rule"
+        ruleID: 0
+        rule: "You must not cheat on this server"
+rule_nocuss:
+        description: "An anticussing rule"
+        ruleID: 1
+        rule: "You must not swear on this server"
+

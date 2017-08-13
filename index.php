@@ -2,7 +2,7 @@
 // This is more of a failsafe than a needed piece of code.
 error_reporting(0);
 @set_time_limit(3);
-// Init vars
+// Init vars (I find variable initialization good for better code, but it's not explicitly necessary here)
 $r       = mt_rand(1,3);
 $plname  = 'Player';
 $map     = '';
@@ -11,7 +11,7 @@ $sid = '';
 
 // TODO: Confirm method name and parameters, using vim and unsure :3
 $config = new Configuration();
-$steam = new SteamAPI($config->getIniValue("ApiKey", "main"));
+
 
 $authors = array(
     1 => 'FIRST SONG NAME',
@@ -21,14 +21,15 @@ $authors = array(
 
 $pictures = array(1,2,3);
 shuffle($pictures);
-// TODO: Add new conversion method to the getPlayerPicture method.
 
 // Assign normal values from API and server inputs
 $map = (isset($_GET['mapname'])) ? "You are connecting to: ", htmlspecialchars(strip_slashes($_GET['map'])) : "You are connecting to: gm_construct (unspecified default)";
 
 $sid = (isset($_GET['steamid'])) ? htmlspecialchars(strip_slashes($_GET['steamid'])) : "garry's steam id, already set to default"; 
 
-$plname = $steam->GetSteamNam
+$steam = new SteamAPI($sid);
+$plname = $steam->GetUserSteamName();
+$avatar = $steam->GetUserPicture();
 
 ?>
 <!DOCTYPE html>
